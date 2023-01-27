@@ -1,6 +1,13 @@
-//const { throwStatement } = require("@babel/types");
 const inquirer = require("inquirer");
+const fs = require("fs");
 const jest = require("jest");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
+const managerArr = [];
+const engineerArr = [];
+const internArr = [];
+
 
 function init() {
   addManager();
@@ -19,7 +26,7 @@ function addManager() {
       {
         type: "input",
         message: "What is the manager's employee ID?",
-        name: "employee_ID",
+        name: "id",
       },
 
       {
@@ -37,6 +44,16 @@ function addManager() {
     .then((data) => {
       //generate manager's HTML
       //employee section
+      const newManager = new Manager(
+        data.name,
+        data.id,
+        data.email,
+        data.number
+      );
+      managerArr.push(newManager);
+
+      //console.log(newManager, newEngineer, newIntern);
+      //generateManagerHtml(data);
       addEmployee();
     });
 }
@@ -60,6 +77,7 @@ function addEmployee() {
         addIntern();
       } else if (data.position == "finished") {
         console.log("you have finished building your team!");
+        createFile();
       }
     });
 }
@@ -76,7 +94,7 @@ function addEngineer() {
       {
         type: "input",
         message: "What is the engineer's employee ID?",
-        name: "employee_ID",
+        name: "id",
       },
 
       {
@@ -92,8 +110,56 @@ function addEngineer() {
       },
     ])
     .then((data) => {
+      const newEngineer = new Engineer(
+        data.name,
+        data.id,
+        data.email,
+        data.github
+      );
+
       //generate engineer HTML
+      engineerArr.push(newEngineer);
+
       addEmployee();
     });
 }
+
+function addIntern() {
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "What is the name of your intern?",
+        name: "name",
+      },
+
+      {
+        type: "input",
+        message: "What is the engineer's employee ID?",
+        name: "id",
+      },
+
+      {
+        type: "input",
+        message: "Enter his/her email address",
+        name: "email",
+      },
+
+      {
+        type: "input",
+        message: "Which school does he/she go to?",
+        name: "school",
+      },
+    ])
+
+    .then((data) => {
+      const newIntern = new Intern(data.name, data.id, data.email, data.school);
+      internArr.push(newIntern);
+      //generate intern HTML
+      addEmployee();
+    });
+}
+
+
+
 init();
