@@ -1,5 +1,4 @@
 const inquirer = require("inquirer");
-const fs = require("fs");
 const jest = require("jest");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
@@ -7,7 +6,7 @@ const Intern = require("./lib/Intern");
 const managerArr = [];
 const engineerArr = [];
 const internArr = [];
-
+const fs = require("fs");
 
 function init() {
   addManager();
@@ -160,6 +159,135 @@ function addIntern() {
     });
 }
 
+function createFile() {
+  fs.writeFile(
+    "./dist/team.html",
+    `
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+          rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
+          crossorigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet"
+        />
+        <script
+          src="https://kit.fontawesome.com/df3f087038.js"
+          crossorigin="anonymous"
+        ></script>
+    
+        <link rel="stylesheet" href="style.css" />
+    
+        <title>Team Members</title>
+      </head>
+      <body>
+        <!-- As a heading -->
+        <nav class="navbar">
+          <div class="container-fluid justify-content-center">
+            <span class="navbar-brand mb-0 h1">Team Members</span>
+          </div>
+        </nav>
+    
+        <main>
+            <div class="container">
+                <div class="row justify-content-center">
+              <!--Team Cards-->
+                ${cardManager()}
+                ${cardEngineer()}
+                ${cardIntern()}
+                </div>
+            </div>
+        </main>
+    </body>
+    
+    </html>
+    
+  `,
+    function (err) {
+      if (err) throw err;
+    }
+  );
+}
 
+function cardManager() {
+  let manager = "";
+  for (let i = 0; i < managerArr.length; i++) {
+    const element = managerArr[i];
+    manager += `
+    <div class="col-4 mt-4">
+    <div class="card h-100">
+    <div class="card-header">
+        <h2>${element.name}</h2>
+        <h4>Manager</h4>
+        <i class="material-icons">supervisor_account</i>
+        <div class="card-body">
+        <p class="id">ID: ${element.id}</p>
+        <p class="email">Email: <a href="mailto:${element.email}">${element.email}</a></p>
+        <p class="office-number">Office Number: ${element.number}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  `;
+  }
+  return manager;
+}
+
+function cardEngineer() {
+  let engineer = "";
+  for (let i = 0; i < engineerArr.length; i++) {
+    const element = engineerArr[i];
+    engineer += `
+    <div class="col-4 mt-4">
+    <div class="card h-100">
+    <div class="card-header">
+          <h2>${element.name}</h2>
+          <h4>Engineer</h4>
+          <i class="material-icons">laptop</i>
+          <div class="card-body">
+          <p class="id">ID: ${element.id}</p>
+          <p class="email">Email: <a href="mailto:${element.email}">${element.email}</a></p>
+          <p class="github">Github: <a href="https://github.com/${element.github}">${element.github}</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+  }
+  return engineer;
+}
+
+function cardIntern() {
+  let intern = "";
+  for (let i = 0; i < internArr.length; i++) {
+    const element = internArr[i];
+    intern += `
+      <div class="col-4 mt-4">
+      <div class="card h-100">
+      <div class="card-header">
+          <h2>${element.name}</h2>
+          <h4>Intern</h4>
+          <i class="material-icons">school</i>
+          
+          <div class="card-body">
+          <p class="id">ID: ${element.id}</p>
+          <p class="email">Email: <a href="mailto:${element.email}">${element.email}</a></p>
+          <p class="school">School: ${element.school}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+  }
+  return intern;
+}
 
 init();
