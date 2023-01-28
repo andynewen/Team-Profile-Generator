@@ -1,6 +1,31 @@
 {
   "dependencies": {
-    "inquirer": "^8.0.0",
+    "inquirer": "^8.0.0"
+  },
+  "devDependencies": {
     "jest": "^29.4.1"
-  }
+  },
+  "name": "team-profile-generator",
+  "description": "",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  
+    "scripts": {
+      "test": "jest"
+    }
+  ,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andynewen/Team-Profile-Generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andynewen/Team-Profile-Generator/issues"
+  },
+  "homepage": "https://github.com/andynewen/Team-Profile-Generator#readme"
 }
